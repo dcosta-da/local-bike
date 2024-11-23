@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: stg_production__brands
+    columns:
+      - name: brand_id
+        description: "Primary key for this table."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_production__categories
+    columns:
+      - name: category_id
+        description: "Primary key for this table."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_bike_database__order_items
+    columns:
+      - name: order_item_id
+        description: "Primary key for this table."
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - relationships:
+              to: ref('stg_bike_database__orders')
+              field: order_id
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_bike_database__products')
+              field: product_id
+
+  - name: stg_production__products
+    columns:
+      - name: product_id
+        description: "Primary key for this table."
+        tests:
+          - unique
+          - not_null
+      - name: category_id
+        tests:
+          - relationships:
+              to: ref('stg_bike_database__categories')
+              field: category_id
+      - name: brand_id
+        tests:
+          - relationships:
+              to: ref('stg_bike_database__brands')
+              field: brand_id
+
+  - name: stg_production__stocks
+    columns:
+      - name: stock_id
+        description: "Primary key for this table."
+        tests:
+          - unique
+          - not_null
