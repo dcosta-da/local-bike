@@ -16,6 +16,7 @@ renamed as (
         , quantity
         , list_price                    AS item_price
         , discount
+        , list_price * (1 - discount)   AS item_price_with_discount
 
     from source
 
