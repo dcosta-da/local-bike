@@ -14,7 +14,7 @@ SELECT
     , oi.item_price
     , oi.discount
     , oi.item_price_with_discount
-    , oi.item_price_with_discount * oi.quantity         AS final_price
+    , oi.item_price_with_discount * oi.quantity         AS final_item_price
 
 FROM {{ ref('stg_sales__order_items') }}                AS oi
 
