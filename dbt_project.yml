@@ -40,10 +40,14 @@ models:
     bronze:
       +materialized: view
       sales:
-        schema: stg_sales
+        schema: bronze
       production:
-        schema: stg_production
+        schema: bronze
 
     silver:
       +materialized: view
-      schema: int
+      schema: silver
+
+    gold:
+      +materialized: table
+      schema: gold
