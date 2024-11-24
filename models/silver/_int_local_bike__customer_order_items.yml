@@ -1,0 +1,73 @@
+version: 2
+
+models:
+  - name: int_local_bike__customer_order_items
+    description:
+      This model consolidates information about orders, customers, stores, staff, and ordered items.
+      It also calculates the final price of items after applying discounts.
+
+    columns:
+      - name: order_item_id
+        description: Primary key of the table.
+
+      - name: customer_id
+        description: Unique identifier of the customer who placed the order.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales__customers')
+              field: customer_id
+
+      - name: customer_city
+        description: City of the customer who placed the order.
+
+      - name: customer_state
+        description: State or region of the customer.
+
+      - name: order_id
+        description: Unique identifier of the order.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales__orders')
+              field: order_id
+
+      - name: order_status
+        description: Status of the order (e.g., "Delivered", "Pending").
+
+      - name: order_date
+        description: Date the order was placed.
+
+      - name: required_date
+        description: Date the order was required to be delivered.
+
+      - name: store_name
+        description: Name of the store associated with the order.
+        tests:
+          - relationships:
+              to: ref('stg_sales__stores')
+              field: store_name
+
+      - name: seller
+        description: Full name of the staff member who handled the order.
+
+      - name: product_id
+        description: Unique identifier of the product in the order.
+        tests:
+          - relationships:
+              to: ref('stg_sales__products')
+              field: product_id
+
+      - name: quantity
+        description: Quantity of items ordered.
+
+      - name: item_price
+        description: Unit price of the item.
+
+      - name: discount
+        description: Discount percentage or amount applied to the item.
+
+      - name: final_item_price
+        description: Total amount paid for the item after applying discounts and multiplying by quantity.
+        tests:
+          - not_null

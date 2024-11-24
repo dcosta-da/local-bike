@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: int_local_bike__stocks 
+    description:
+      This model provides information about stock levels for products across stores. 
+      It links stock data with store and product details to give a complete view of inventory.
+
+    columns:
+      - name: stock_id
+        description: Unique identifier for the stock record.
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('stg_production__stocks')
+              field: stock_id
+
+      - name: store_id
+        description: Unique identifier for the store where the stock is located.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sales__stores')
+              field: store_id
+
+      - name: store_name
+        description: Name of the store where the stock is located.
+
+      - name: product_id
+        description: Unique identifier for the product in stock.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_production__products')
+              field: product_id
+
+      - name: product_name
+        description: Name of the product in stock.
+
+      - name: stock_quantity
+        description: Quantity of the product available in stock.

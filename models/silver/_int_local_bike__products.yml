@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: int_local_bike__products  
+    description: 
+      This model provides detailed information about products, including their prices, model years, associated categories, and brands. 
+      It consolidates product data with additional metadata from the categories and brands tables.
+
+    columns:
+      - name: product_id
+        description: Primary key of the table. Unique identifier for the product.
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('stg_production__products')
+              field: product_id
+
+      - name: product_name
+        description: Name of the product.
+
+      - name: product_price
+        description: Price of the product.
+
+      - name: model_year
+        description: The year the product model was released or introduced.
+
+      - name: category_name
+        description: Name of the product's category.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_production__categories')
+              field: category_name
+
+      - name: brand_name
+        description: Name of the product's brand.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_production__brands')
+              field: brand_name
